@@ -4,16 +4,31 @@ namespace LSLib.VirtualTextures;
 
 public class PageFile : IDisposable
 {
-    private readonly VirtualTileSet TileSet;
-    private readonly FileStream Stream;
-    private readonly BinaryReader Reader;
+    private VirtualTileSet TileSet;
+    private MemoryStream Stream;
+    private BinaryReader Reader;
     public GTPHeader Header;
-    private readonly List<UInt32[]> ChunkOffsets;
+    private List<UInt32[]> ChunkOffsets;
 
     public PageFile(VirtualTileSet tileset, string path)
     {
         TileSet = tileset;
-        Stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+        Stream = new MemoryStream();
+        using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            fileStream.CopyTo(Stream);
+        Stream.Position = 0;
+        Setup(tileset);
+    }
+
+    public PageFile(VirtualTileSet tileset, byte[] data)
+    {
+        TileSet = tileset;
+        Stream = new MemoryStream(data);
+        Setup(tileset);
+    }
+
+    private void Setup(VirtualTileSet tileset)
+    {
         Reader = new BinaryReader(Stream);
 
         Header = BinUtils.ReadStruct<GTPHeader>(Reader);
