@@ -319,6 +319,14 @@ public class VirtualTileSet : IDisposable
     {
     }
 
+    public VirtualTileSet(Stream stream)
+    {
+        using (var reader = new BinaryReader(stream))
+        {
+            LoadFromStream(stream, reader, false);
+        }
+    }
+
     public VirtualTileSet()
     {
     }
