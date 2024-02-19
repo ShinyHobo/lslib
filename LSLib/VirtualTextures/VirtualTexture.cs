@@ -301,6 +301,7 @@ public class VirtualTileSet : IDisposable
     public GTSThumbnailInfo[] ThumbnailInfos;
     public GTSPackedTileID[] PackedTileIDs;
     public GTSFlatTileInfo[] FlatTileInfos;
+    public byte[] SingleFileContents;
 
     private readonly Dictionary<int, PageFile> PageFiles = [];
     private readonly TileCompressor Compressor;
@@ -586,7 +587,7 @@ public class VirtualTileSet : IDisposable
         if (!PageFiles.TryGetValue(pageFileIdx, out PageFile file))
         {
             var meta = PageFileInfos[pageFileIdx];
-            file = new PageFile(this, Path.Join(PagePath, meta.FileName));
+            file = SingleFileContents == null ? new PageFile(this, PagePath + Path.DirectorySeparatorChar + meta.FileName) : new PageFile(this, SingleFileContents);
             PageFiles.Add(pageFileIdx, file);
         }
 
