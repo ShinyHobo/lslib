@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace LSTools.StatParser;
 
-class StatChecker : IDisposable
+public class StatChecker : IDisposable
 {
     private string GameDataPath;
     private VFS FS;
