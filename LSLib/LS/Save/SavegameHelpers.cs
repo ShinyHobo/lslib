@@ -74,7 +74,7 @@ public class SavegameHelpers : IDisposable
         var rsrcWriter = new LSFWriter(rewrittenStream)
         {
             Version = conversionParams.LSF,
-            EncodeSiblingData = false
+            MetadataFormat = LSFMetadataFormat.None
         };
         rsrcWriter.Write(globals);
         rewrittenStream.Seek(0, SeekOrigin.Begin);
@@ -105,10 +105,10 @@ public class SavegameHelpers : IDisposable
             foreach (var file in Package.Files.Where(x => x.Name.ToLowerInvariant() != "globals.lsf"))
             {
                 using var stream = file.CreateContentReader();
-                var contents = new byte[stream.Length];
-                stream.ReadExactly(contents, 0, contents.Length);
+                using var unpacked = new MemoryStream();
+                stream.CopyTo(unpacked);
 
-                build.Files.Add(PackageBuildInputFile.CreateFromBlob(contents, file.Name));
+                build.Files.Add(PackageBuildInputFile.CreateFromBlob(unpacked.ToArray(), file.Name));
             }
         }
         else
@@ -124,14 +124,14 @@ public class SavegameHelpers : IDisposable
             foreach (var file in Package.Files.Where(x => x.Name.ToLowerInvariant() != "StorySave.bin"))
             {
                 using var stream = file.CreateContentReader();
-                var contents = new byte[stream.Length];
-                stream.ReadExactly(contents, 0, contents.Length);
+                using var unpacked = new MemoryStream();
+                stream.CopyTo(unpacked);
 
-                build.Files.Add(PackageBuildInputFile.CreateFromBlob(contents, file.Name));
+                build.Files.Add(PackageBuildInputFile.CreateFromBlob(unpacked.ToArray(), file.Name));
             }
         }
 
-        using (var packageWriter = new PackageWriter(build, path))
+        using (var packageWriter = PackageWriterFactory.Create(build, path))
         {
             packageWriter.Write();
         }

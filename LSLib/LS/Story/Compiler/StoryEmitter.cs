@@ -1,4 +1,4 @@
-﻿using LSLib.LS.Story.GoalParser;
+﻿using LSLib.Parser;
 using System.Diagnostics;
 
 namespace LSLib.LS.Story.Compiler;
@@ -389,8 +389,7 @@ public class StoryEmitter
             {
                 Types = new List<uint>(signature.Params.Count)
             },
-            OwnerNode = null,
-            FactsPosition = 0
+            OwnerNode = null
         };
 
         foreach (var param in signature.Params)
@@ -457,8 +456,7 @@ public class StoryEmitter
             {
                 Types = paramTypes
             },
-            OwnerNode = ownerNode,
-            FactsPosition = 0
+            OwnerNode = ownerNode
         };
 
         osiDb.Facts = new FactCollection(osiDb, Story);

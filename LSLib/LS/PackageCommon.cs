@@ -28,7 +28,7 @@ public class PackagedFileInfo : PackagedFileInfoCommon
         }
         else
         {
-            return BinUtils.Decompress(PackageFile, PackageView, (long)OffsetInFile, (int)SizeOnDisk, (int)UncompressedSize, Flags);
+            return CompressionHelpers.Decompress(PackageFile, PackageView, (long)OffsetInFile, (int)SizeOnDisk, (int)UncompressedSize, Flags);
         }
     }
 
@@ -195,7 +195,7 @@ public class Packager
         AddFilesFromPath(build, inputPath);
 
         ProgressUpdate("Creating archive ...", 0, 1);
-        using var writer = new PackageWriter(build, packagePath);
+        using var writer = PackageWriterFactory.Create(build, packagePath);
         writer.WriteProgress += WriteProgressUpdate;
         writer.Write();
     }

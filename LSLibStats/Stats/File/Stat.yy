@@ -1,10 +1,10 @@
-﻿%namespace LSLib.LS.Stats.StatParser
+﻿%namespace LSLib.Stats.StatParser
 %partial 
 %visibility public
 %parsertype StatParser
 %tokentype StatTokens
 %YYSTYPE System.Object
-%YYLTYPE LSLib.LS.Story.GoalParser.CodeLocation
+%YYLTYPE LSLib.Parser.CodeLocation
 
 %start StatFile
 
