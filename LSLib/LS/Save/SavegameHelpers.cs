@@ -74,7 +74,8 @@ public class SavegameHelpers : IDisposable
         var rsrcWriter = new LSFWriter(rewrittenStream)
         {
             Version = conversionParams.LSF,
-            MetadataFormat = LSFMetadataFormat.None
+            //MetadataFormat = LSFMetadataFormat.None
+            EncodeSiblingData = false
         };
         rsrcWriter.Write(globals);
         rewrittenStream.Seek(0, SeekOrigin.Begin);

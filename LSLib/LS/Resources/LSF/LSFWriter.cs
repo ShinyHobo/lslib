@@ -140,7 +140,7 @@ public class LSFWriter(Stream stream)
                     meta.ValuesSizeOnDisk = (UInt32)valuesCompressed.Length;
                 }
 
-                meta.CompressionFlags = BinUtils.MakeCompressionFlags(Compression, CompressionLevel);
+                meta.CompressionFlags = CompressionHelpers.MakeCompressionFlags(Compression, CompressionLevel);
                 meta.Unknown2 = 0;
                 meta.Unknown3 = 0;
                 meta.HasSiblingData = EncodeSiblingData ? 1u : 0u;
@@ -173,7 +173,7 @@ public class LSFWriter(Stream stream)
                 }
 
                 meta.Unknown = 0;
-                meta.CompressionFlags = BinUtils.MakeCompressionFlags(Compression, CompressionLevel);
+                meta.CompressionFlags = CompressionHelpers.MakeCompressionFlags(Compression, CompressionLevel);
                 meta.Unknown2 = 0;
                 meta.Unknown3 = 0;
                 meta.HasSiblingData = EncodeSiblingData ? 1u : 0u;

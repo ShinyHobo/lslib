@@ -74,3 +74,9 @@ StatFastParser
 LSLibSearch
 LSLibSearchIndexer
 *.lst
+LSLib/LS/Stats/Parser/Stat.lex
+LSLib/LS/Stats/Parser/Stat.yy
+LSLib/LS/Stats/Parser/StatLua.lex
+LSLib/LS/Stats/Parser/StatLua.yy
+LSLib/LS/Stats/Parser/StatProperty.lex
+LSLib/LS/Stats/Parser/StatProperty.yy
