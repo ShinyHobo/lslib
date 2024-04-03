@@ -322,6 +322,7 @@ public class VirtualTileSet : IDisposable
 
     public VirtualTileSet(Stream stream)
     {
+        Compressor = new TileCompressor();
         using (var reader = new BinaryReader(stream))
         {
             LoadFromStream(stream, reader, false);
